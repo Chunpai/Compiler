@@ -1,0 +1,45 @@
+Author: Chunpai Wang
+Email: cwang64@u.rochester.edu
+Date: Oct 19, 2014
+
+***************************************************************************
+This folder contains 4 files:
+1. README: this file
+2. tokenizer.py  : scan program into tokens, and it will copy meta_stmt into intermedia code
+3. parser.py  : LL(1) parsing (recursive descent) + intra-function code generation
+4. test_files  : folder stored test cases
+5. test.rb :  test program written in ruby. 
+***************************************************************************
+
+How to run this program:
+            ruby test.rb test_files/case ./parser.py
+or
+            ruby test.rb all ./parser.py      
+                   
+
+***************************************************************************
+Program Description:
+2. My program can do three address code transfer and control flow evaluation.
+3. First, need to figure out the attribute grammar for three address code transfer and control flow.
+4. Second, we need a global symbol table, and each function needs a symbol table.
+5. I have dictionay data structure to build the symbol table. Key is the function name, and value is
+    also a dictionray, in which key is the variable name, value is a tuple, which first element is 
+    symbol_table name, second element is offset in the symbol table.
+6. See comments in the code for details.
+
+****************************************************************************
+Results for Test Cases:
+Test Case               Pass Or Not                    
+ab.c                        Pass          
+automaton.c                 Pass              
+binrep.c                    Pass         
+fibonacci.c                 Pass         
+loop_while.c                Pass        
+mandel.c                    Pass         
+MeaningOfLife.c             Pass          
+tax.c                       Pass
+
+
+
+**************************************************************************************************
+
