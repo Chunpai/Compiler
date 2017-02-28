@@ -1,0 +1,22 @@
+Author: Chunpai Wang
+email: cwang64@u.rochester.edu
+date: Sep22,2014
+
+This folder contain 4 files:
+1. README: this file
+2. input_file: contains arithematic expression to be calculated
+3. tokenizer.py: scan and tokenize the input_file into tokens
+4. calculator.py: get tokens from tokenizer and use LL(1) grammer with action routine 
+                  to paese and evaluate the expression.
+
+How to run this program:
+        "python calculator.py input_file"
+        
+
+Descriptions:
+This program will scan the arithmatic expression stored in the input_file,
+and tokenize the expression into several tokens.
+And then it implements the LL(1) parsing with action routine to do the 
+parsing and evaluation, without building a real parse tree.
+
+
