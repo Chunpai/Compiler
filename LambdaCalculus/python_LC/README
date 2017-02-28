@@ -1,0 +1,47 @@
+Author: Chunpai Wang
+API written by: Jin Chui Ann
+
+----------------------------------------------------------
+This folder contains 3 files:
+1. eval.py   : python code to implement Lambda Calculus
+2. README    : this file
+3. eval_api_doc.txt  : API file for eval.py
+
+----------------------------------------------------------
+How to run the code:          python eval.py
+How to test cases:            add case in the main function and run the code
+How to test execution time:   time python eval.py
+
+----------------------------------------------------------
+                        
+Test cases                                                          Result
+eval(Apply(Lambda('x','x'),1))                                        pass
+eval(1)                                                               pass      
+eval(Lambda('x','x'))                                                 pass
+eval(Expr('+',2,3))                                                   pass
+eval(Apply(Lambda('x',Expr('+','x',1)),2))                            pass                   # same to (lambda(x (x+1) 2)
+eval(Apply(Lambda('x',Apply('x','x')),Lambda('x',Apply('x','x'))))    pass                   # infinite loop, stackoverflow exception
+----------------------------------------------------------
+
+Results for Omega Case:    
+
+There are 990 function applications before error occurs.
+
+Execution Time in cycle2.csug.rochester.edu:(use command "time python eval.py")
+Test1: 0.056s 
+Test2: 0.050s
+Test3: 0.053s
+Test4: 0.058s
+Test5: 0.050s
+Test6: 0.057s
+Test7: 0.057s
+Test8: 0.056s
+Test9: 0.050s
+Test10:0.051s
+Average: 0.0538s
+Min/Max: 0.8621
+
+
+
+
+

@@ -1,0 +1,72 @@
+Author: Chunpai Wang
+Date: Dec 14, 2014
+
+************File Description***********
+This folder constains files:
+1. README  :this file
+2. interval_tree.c    : c module of python extension interval tree
+3. setup.c            : used to install c module first
+4. intTree.py         : pure python implementation of interval tree
+5. c_test.py          : test for C part    (randomly create interval nodes, insert and do search overlap)
+6. p_test.py          : test for pure python part (randomly create interval nodes, insert and do search overlap)
+
+********* How To Run The Codes *********
+1.       python setup.py install      #(install intervalTree module which implemented in C) You may see some warning, just ignore it
+2.       time python c_test.py        # test the python extension with C programing  (default size is 1000)
+3.       time python p_test.py        # test with pure python                        (default size is 1000)
+
+********** Design Details **************
+Basically, write C constructs, and use C API functions to create the Python constructs.
+1. Create struct for tree node 
+2. write init and dealloc
+3. declare members
+4. write functions
+5. declare functions
+6. make the type ready
+References: http://www.geeksforgeeks.org/interval-tree/      (C++ implementation of interval tree)
+            http://nedbatchelder.com/text/whirlext.html#h_Making_a_type  (tutorial of writing Python extension with C)
+            https://www.ibm.com/developerworks/cn/linux/l-pythc/         (tutorial of writing Python extension with C)
+            http://www.tutorialspoint.com/python/python_further_extensions.htm  (tutorial of writing Python extension with C)
+
+
+********  Interface For Python *********
+(For using my Python extension with C programming)
+intervalTree module:        Need to import intervalTree in your python program
+insert(root,node):          insert new node into tree, intervalTree.insert()
+overlapSearch(root,node):   search if there an overlap in the tree for node,  intervalTree.overlapSearch()
+
+
+*****************************************
+*** Data Structure and Interface In C ***
+ITNode  : a C struct which has elements {int low, int high, int max, PyObject* left, PyObject *right}
+          used to represent a node in interval tree.
+          low:  the lower bound of interval
+          high: the higher bound of interval
+          max:  max value for subtree
+          left: left child
+          right: right child 
+
+void insert(ITNode *root,ITNode *node)                            : insert node 
+PyObject* warp_insert(PyObject *self, PyObject *args)             : wrapper for insert function
+int doOverlap(ITNode *node1,ITNode *node2)                        : check if two node overlap
+ITNode* overlapSearch(ITNode *root, ITNode *node)                 : search overlap node in the tree
+static ITNode* wrap_overlapSearch(PyObject* self, PyObject *args) : wrapper for overlapSearch 
+??all others are Python C API functions
+
+
+*******Performance Evaluation************
+My python C extension cannot work consistently. 
+It seems my code cannot dealloc the memory properly.
+And it will trigger Segmentation Fault sometimes.
+I dont know how to fix it.
+But when size is small, it works.
+I wrote the python part myself. 
+
+size      c_test        p_test
+10        0.021s        0.022s 
+1000      0.024s        0.044s
+1000000   0.35s         61.348 
+
+
+Obviously, python C extension is much faster.
+

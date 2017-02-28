@@ -1,0 +1,94 @@
+Homework 7: Singularity Assignment
+Author: Jin Chul Ann
+Email: jann@u.rochester.edu
+Language: Ruby
+API document and test cases by: Chunpai Wang
+
+Line Count for Implementation 140
+	
+		140 interpreter.rb
+
+Run:
+	
+	./interpreter.rb
+
+	To end do ctrl+D or ctrl+C to denote EOF
+
+
+Functionality:
+
+	The program runs an interpreter which takes in single line from the user. The program asks for user to input a lambda expression in the line. Note that only single line can be read for the program (e.g. ((lambda x x) 2) not with newline within the expression). The program allows Apply, Lambda and mathematical expressions (e.g. (+ 3 4)). Just as Scheme the syntax of the input is similar.
+
+	Design decision:
+
+		I used a simple parser to parse each line to test each case easily. The program uses predefined Hash to use it for Environment for each eval. 
+
+	Test Cases:
+
+		➜  Singularity  ./interpreter.rb 
+		Scheme interpreter in Ruby
+		 >> 9
+		9
+		Took 0.0119 milliseconds to evaluate.
+		9
+		 >> (+ 3 4)
+		[:+, 3, 4]
+		Took 0.0179 milliseconds to evaluate.
+		7
+		 >> (+ (* 5 (+ 8 10)) (+ 3 (* 11 24)))
+		[:+, [:*, 5, [:+, 8, 10]], [:+, 3, [:*, 11, 24]]]
+		Took 0.0318 milliseconds to evaluate.
+		357
+		 >> ((lambda y 5) ((lambda x x) (lambda x x)))
+		[[:lambda, :y, 5], [[:lambda, :x, :x], [:lambda, :x, :x]]]
+		x is not defined.
+		x is not defined.
+		Took 0.0219 milliseconds to evaluate.
+		5
+		 >> ((lambda y 25) (lambda x x))
+		[[:lambda, :y, 25], [:lambda, :x, :x]]
+		Took 0.0147 milliseconds to evaluate.
+		25
+		 >> ((lambda f (f 4)) ((lambda y (lambda x y)) 23))
+		[[:lambda, :f, [:f, 4]], [[:lambda, :y, [:lambda, :x, :y]], 23]]
+		Took 0.0205 milliseconds to evaluate.
+		23
+		 >> ((lambda y (+ 25 y)) 2)
+		[[:lambda, :y, [:+, 25, :y]], 2]
+		Took 0.0265 milliseconds to evaluate.
+		27
+		 >> ((lambda x (x x)) (lambda x (x x)))
+		[[:lambda, :x, [:x, :x]], [:lambda, :x, [:x, :x]]]
+		Took 1.2018 to return error.
+		STACK LEVEL: 5757
+		Error: stack level too deep
+
+		each cases gives correct output. The omega case, the infinite loop, gives Error since the stack level is too deep. So it prints the number of level it went through and the error it has.
+
+Speed of each evaluation (in milliseconds):
+
+	Expresssion 										1st				2nd				3rd				4th				5th 			6th				7th				8th				9th 			10th			Average
+
+	9 													0.0072			0.00571			0.0057 			0.00568			0.00568			0.00571 		0.00573			0.00464			0.00454			0.01299 		0.005787
+
+	(+ 3 4)												0.01939			0.01493 		0.01477 		0.02335			0.01526			0.01554 		0.01537 		0.01511			0.01661 		0.01573			0.016606
+
+	(+ (* 5 (+ 8 10)) (+ 3 (* 11 24)))					0.02978			0.02865  		0.02399 		0.02417			0.02387			0.02421 		0.03098			0.02426			0.02932			0.03026			0.026949
+
+	((lambda y 5) ((lambda x x) (lambda x x)))			0.02811			0.02073			0.02392			0.02219			0.02142			0.02093			0.02105			0.02897			0.02182			0.02132			0.023046
+
+	((lambda y 25) (lambda x x))						0.01888 		0.02006			0.01436 		0.01353			0.0138			0.01361 		0.02003			0.01398			0.01386			0.01381			0.015592
+
+	((lambda f (f 4)) ((lambda y (lambda x y)) 23))		0.02885 		0.01905			0.01917			0.01958			0.0201			0.04855			0.028 			0.02659 		0.01856 		0.02278			0.025123
+
+	((lambda y (+ 25 y)) 2)								0.0199 			0.01581 		0.01609 		0.01604 		0.016 			0.0161 			0.02439 		0.0149 			0.01501 		0.01487 		0.016911
+
+	((lambda x (x x)) (lambda x (x x)))					1.63738 		1.1639 			1.16185 		1.18619 		1.31677 		1.11731 		1.13675 		1.22756 		1.4765 			1.19223 		1.261644
+
+	The last expression is omega which shoes that it takes much longer than other expressions and returns the error message due to the StackOverFlow Error
+
+Files:
+
+			interpreter.rb
+			README(ruby)
+			doc.zip

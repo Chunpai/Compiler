@@ -1,0 +1,46 @@
+Author: Chunpai Wang
+Email: cwang64@u.rochester.edu
+Date: Nov 04,2014
+
+**************************************************************************
+This folder contains 5 files:
+1.README  : this file
+2.parser.py : one pass compiler( three address code, control flow, and calling sequence)
+3.tokenizer.py : read input file and tokenize the file into tokens
+4.test.rb : ruby script for testing 
+5.test_files    : folder storing test cases
+
+***************************************************************************
+How to run this program:
+        test specific case:       "./parser.py  case"
+        or 
+        test all cases:           "ruby test.rb all ./parser.py"
+
+
+****************************************************************************
+Results for Test Cases:
+Test Case               Pass Or Not                    
+ab.c                        Passed          
+automaton.c                 Passed              
+binrep.c                    Passed         
+fibonacci.c                 Passed         
+loop_for.c                  Failed(because not required to support for loop)
+loop_while.c                Passed        
+mandel.c                    Passed         
+MeaningOfLife.c             Passed          
+tax.c                       Passed
+
+****************************************************************************
+Description:
+1. read input and tokenize, next_token() in tokenizer.py can generate next token for parser
+2. parser will not generate parse tree, instead, it will generate other intermedia representaion
+3. parser will parse and check the syntax. 
+4. action routine will check the semantic.
+5. represent all expression in three address code
+6. evaluate the control flow, and generate goto label
+7. use symbal table to check the functions and varibles
+9. use one memory array to store all varibles.
+10. implement stack frame in this memory array
+11. handle the calling sequence (caller, prelogue, and epilogue)
+12. see detail comments in code files
+
